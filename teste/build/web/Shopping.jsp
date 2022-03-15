@@ -38,7 +38,13 @@
 </head>
 
 <body>
-
+    <%
+                UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+                if (loginUser == null) {
+                    loginUser = new UserDTO();
+                }
+                System.out.println(loginUser.toString());
+            %>
     <!-- Start Main Top -->
     <div class="main-top">
         <div class="container-fluid">
@@ -47,13 +53,27 @@
                     <div class="right-phone-box">
                         <p>Call US :- <a href="tel:0929644051"> +84 929 644 051</a></p>
                     </div>
+                    <c:url var="logoutLink" value="MainController"> 
+                            <c:param name="action" value="Logout"></c:param> 
+                        </c:url>
+                    <c:if test="${empty sessionScope.LOGIN_USER}">
                     <div class="our-link">
                         <ul>
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="signup.html">Register</a></li>
+                            <li><a href="login.jsp">Login</a></li>
+                            <li><a href="signup.jsp">Register</a></li>
                         </ul>
                     </div>
+                    </c:if>
+                    <c:if test="${not empty sessionScope.LOGIN_USER}">
+                        <div class="our-link">
+                        <ul>
+                             <li class="nav" id="welcome">Welcome user: <%= loginUser.getName()%></li>
+                             <li><a href="myaccount.jsp">My Account</a></li>
+                              <li><a class="nav" href="${logoutLink}">Logout</a><li>
+                        </ul>
+                    </div>
+                    </c:if>
+                  
                 </div>
             </div>
         </div>

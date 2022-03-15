@@ -46,6 +46,44 @@
     <body>
         <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <!-- Start Main Top -->
+        <%
+                UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+                if (loginUser == null) {
+                    loginUser = new UserDTO();
+                }
+                System.out.println(loginUser.toString());
+            %>
+            <div class="main-top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="right-phone-box">
+                        <p>Call US :- <a href="tel:0929644051"> +84 929 644 051</a></p>
+                    </div>
+                    <c:url var="logoutLink" value="MainController"> 
+                            <c:param name="action" value="Logout"></c:param> 
+                        </c:url>
+                    <c:if test="${empty sessionScope.LOGIN_USER}">
+                    <div class="our-link">
+                        <ul>
+                            <li><a href="login.jsp">Login</a></li>
+                            <li><a href="signup.jsp">Register</a></li>
+                        </ul>
+                    </div>
+                    </c:if>
+                    <c:if test="${not empty sessionScope.LOGIN_USER}">
+                        <div class="our-link">
+                        <ul>
+                             <li class="nav" id="welcome">Welcome: <%= loginUser.getName()%></li>
+                              <li><a class="nav" href="${logoutLink}">Logout</a><li>
+                        </ul>
+                    </div>
+                    </c:if>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
         <header class="main-header">
             <!-- Start Navigation -->
             <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
