@@ -1,3 +1,4 @@
+<%@page import="sample.user.UserDTO"%>
 <!DOCTYPE html>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
@@ -37,7 +38,13 @@
 </head>
 
 <body>
-
+      <%
+                UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+                if (loginUser == null) {
+                    loginUser = new UserDTO();
+                }
+                System.out.println(loginUser.toString());
+            %>
     <!-- Start Main Top -->
     <div class="main-top">
         <div class="container-fluid">
@@ -46,13 +53,27 @@
                     <div class="right-phone-box">
                         <p>Call US :- <a href="tel:0929644051"> +84 929 644 051</a></p>
                     </div>
+                    <c:url var="logoutLink" value="MainController"> 
+                            <c:param name="action" value="Logout"></c:param> 
+                        </c:url>
+                    <c:if test="${empty sessionScope.LOGIN_USER}">
                     <div class="our-link">
                         <ul>
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="signup.html">Register</a></li>
+                            <li><a href="login.jsp">Login</a></li>
+                            <li><a href="register.jsp">Register</a></li>
                         </ul>
                     </div>
+                    </c:if>
+                    <c:if test="${not empty sessionScope.LOGIN_USER}">
+                        <div class="our-link">
+                        <ul>
+                             <li class="nav" id="welcome">Welcome user: <%= loginUser.getName()%></li>
+                             <li><a href="MyAccount.jsp">My Account</a></li>
+                              <li><a class="nav" href="${logoutLink}">Logout</a><li>
+                        </ul>
+                    </div>
+                    </c:if>
+                  
                 </div>
             </div>
         </div>
@@ -69,42 +90,42 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                    <a class="navbar-brand" href="index.html"><img src="images/logo.png" class="logo" alt=""></a>
+                    <a class="navbar-brand" href="ShoppingHome.jsp"><img src="images/logo.png" class="logo" alt=""></a>
                 </div>
                 <!-- End Header Navigation -->
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="ShoppingHome.jsp">Home</a></li>
                         <li class="dropdown megamenu-fw">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Product</a>
+                            <a href="Shopping.jsp" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Product</a>
                             <ul class="dropdown-menu megamenu-content" role="menu">
                                 <li>
                                     <div class="row">
                                         <div class="col-menu col-md-4">
                                             <h6 class="title">Top</h6>
                                                 <ul class="menu-col">
-                                                    <li><a href="shop.html">Jackets</a></li>
-                                                    <li><a href="shop.html">Shirts</a></li>
-                                                    <li><a href="shop.html">Sweaters & Cardigans</a></li>
-                                                    <li><a href="shop.html">T-shirts</a></li>
+                                                    <li><a href="CategoryController?categoryID=1">Jackets</a></li>
+                                                    <li><a href="CategoryController?categoryID=2">Shirts</a></li>
+                                                    <li><a href="CategoryController?categoryID=3">Sweaters & Cardigans</a></li>
+                                                    <li><a href="CategoryController?categoryID=4">T-shirts</a></li>
                                                 </ul>
                                         </div>
                                         <!-- end col-4 -->
                                         <div class="col-menu col-md-4">
                                             <h6 class="title">Bottom</h6>
                                                 <ul class="menu-col">
-                                                    <li><a href="shop.html">Jeans</a></li>
-                                                    <li><a href="shop.html">Trousers</a></li>
+                                                    <li><a href="CategoryController?categoryID=5">Jeans</a></li>
+                                                    <li><a href="CategoryController?categoryID=6">Trousers</a></li>
                                                 </ul>
                                         </div>
                                         <!-- end col-4 -->
                                         <div class="col-menu col-md-4">
                                             <h6 class="title">Accessories</h6>
                                                 <ul class="menu-col">
-                                                    <li><a href="shop.html">Sunglasses</a></li>
-                                                    <li><a href="shop.html">Wallets</a></li>
+                                                    <li><a href="CategoryController?categoryID=7">Sunglasses</a></li>
+                                                    <li><a href="CategoryController?categoryID=8">Wallets</a></li>
                                                 </ul>
                                         </div>
                                         <!-- end col-4 -->
@@ -116,9 +137,15 @@
                         <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
                             <ul class="dropdown-menu">
-                                <li><a href="cart.html">Cart</a></li>
-                                <li><a href="checkout.html">Checkout</a></li>
-                                <li><a href="my-account.html">My Account</a></li>
+                                <li><a href="cart.jsp">Cart</a></li>
+                                <li><a href="checkout.jsp">Checkout</a></li>
+                                <c:if test="${empty sessionScope.LOGIN_USER}">
+                                <li><a href="login.jsp">My Account</a></li>
+                                </c:if>
+                                <c:if test="${not empty sessionScope.LOGIN_USER}">
+                                 <li><a href="MyAccount.jsp">My Account</a></li>
+                                </c:if>
+                               
                             </ul>
                         </li>
                     </ul>
@@ -129,7 +156,7 @@
                 <div class="attr-nav">
                     <ul>
                         <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                        <li class="side-menu"><a href="cart.html">
+                        <li class="side-menu"><a href="cart.jsp">
 						<i class="fa fa-shopping-bag"></i>
                             <span class="badge">3</span>
 					</a></li>
@@ -141,6 +168,18 @@
         </nav>
         <!-- End Navigation -->
     </header>
+    <!-- End Main Top -->
+
+    <!-- Start Top Search -->
+    <div class="top-search">
+        <div class="container">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search">
+                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+            </div>
+        </div>
+    </div>
     <!-- End Main Top -->
 
     <!-- Start Top Search -->
@@ -177,8 +216,8 @@
             <form action="MainController" name="" method="POST" class="login">
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <label for="InputEmail" class="mb-0">Email Address</label>
-                        <input name="userID" type="text" class="form-control" id="InputEmail" placeholder="Enter Email"> </div>
+                        <label for="InputUserID" class="mb-0">User ID</label>
+                        <input name="userID" type="text" class="form-control" id="InputEmail" placeholder="Enter User ID"> </div>
                     <div class="form-group col-md-12">
                         <label for="InputPassword" class="mb-0">Password</label>
                         <input name="password" type="password" class="form-control" id="InputPassword" placeholder="Password"> </div>

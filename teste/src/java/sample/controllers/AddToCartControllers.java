@@ -21,7 +21,7 @@ import sample.shopping.Cart;
  */
 public class AddToCartControllers extends HttpServlet {
     private static final String ERROR="error.jsp";
-    private static final String SUCCESS="Home.jsp";   
+    private static final String SUCCESS="Shopping.jsp";   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -31,10 +31,10 @@ public class AddToCartControllers extends HttpServlet {
             String productName = request.getParameter("productName");
             String image = request.getParameter("image");
             float price = Float.parseFloat(request.getParameter("price"));
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
-            int categoryID = Integer.parseInt(request.getParameter("categoryID"));
-            ProductDTO product = new ProductDTO(productID, productName, image, price, quantity, categoryID);
-            System.out.println(product);
+            String categoryID = request.getParameter("categoryID");
+            String description = request.getParameter("description");
+            String sizeID = request.getParameter("sizeID");
+            ProductDTO product = new ProductDTO(productID, productName, image, price, categoryID, description, sizeID);
             HttpSession session = request.getSession();
             Cart cart = (Cart) session.getAttribute("CART");
             if(cart == null){

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import sample.user.UserDAO;
 import sample.user.UserDTO;
 import sample.user.UserError;
+import valid.CheckValid;
 
 /**
  *
@@ -22,7 +23,7 @@ import sample.user.UserError;
 public class CreateController extends HttpServlet {
 
     
-    private static final String ERROR="createUser.jsp";
+    private static final String ERROR="register.jsp";
     private static final String SUCCESS="login.jsp";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -37,35 +38,43 @@ public class CreateController extends HttpServlet {
             String roleID="US";
             String password=request.getParameter("password");
             String confirm=request.getParameter("confirm");
+            System.out.println("Printing User Information in Create Controller");
+            System.out.println("userID: "+userID+" ,Name: "+Name+" ,Address: "+address+" , Phone: "+phone+" ,Password: "+password+" ,Confirm: "+confirm);
             //check validation here: check ID, name, role, pass....
             boolean check = true;
             UserError userError=new UserError();
+            UserDAO dao = new UserDAO();
+            UserDTO checkUser=dao.getUserInfor(userID);
+            System.out.println("User ID: " + checkUser.toString());
             if(userID.length()<2 || userID.length()>10){
-                userError.setUserID("Userid must be in [2,10]");
+                userError.setUserID("User I must be from 2 to 10 characters");
                 check=false;
             }
             if(Name.length()<5 || Name.length()>50){
-                userError.setErrorName("Name must be in [5,50]");
+                userError.setErrorName("Name must be from 5 to 50 characters");
                 check=false;
             }
             if(address.isEmpty()){
-                userError.setAddress("Please enter address, do not put null");
+                userError.setAddress("Please enter address");
                 check=false;
             }
             if(phone.isEmpty()){
-                userError.setPhone("Please enter phone number, do not put null");
-            }          
+                userError.setPhone("Please enter phone number");
+            }
+            //kiem tra phone
+            CheckValid checkValid = new CheckValid();
+            if(checkValid.checkNumber(phone) == false || phone.length()<10){
+                userError.setPhone("Phone is wrong, please try again");
+            }
             if(password.length()<1 || password.length()>50){
-                userError.setPassword("Userid must be in [1,50]");
+                userError.setPassword("Userid must be from 5 to 50 characters");
                 check=false;
             }
             if(!confirm.equals(password)){
-                userError.setConfirm("Password not the same, please check again!");
+                userError.setConfirm("Password not the same, please try again");
                 check=false;
             }
             //kiem tra UserId
-            UserDAO dao = new UserDAO();
-            UserDTO checkUser=dao.getUserInfor(userID);
             if(checkUser!=null){
                 userError.setUserID("Duplicate userID!");
                 check=false;

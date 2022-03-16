@@ -1,9 +1,14 @@
-<%@page import="sample.user.UserDTO"%>
-<!DOCTYPE html>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html lang="en">
-<!-- Basic -->
+<%-- 
+    Document   : MyAccount
+    Created on : Mar 16, 2022, 8:23:22 PM
+    Author     : ASUS
+--%>
 
+<%@page import="sample.user.UserDTO"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+   
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Site Metas -->
-    <title>Chickentique - Login</title>
+    <title>Chickentique - My account</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -22,13 +27,13 @@
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <!-- Site CSS -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <!-- Responsive CSS -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/responsive.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/custom.css">
+    <link rel="stylesheet" href="css/custom.css">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -38,11 +43,12 @@
 </head>
 
 <body>
-      <%
+ <%
                 UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
                 if (loginUser == null) {
                     loginUser = new UserDTO();
                 }
+                
                 System.out.println(loginUser.toString());
             %>
     <!-- Start Main Top -->
@@ -180,18 +186,6 @@
             </div>
         </div>
     </div>
-    <!-- End Main Top -->
-
-    <!-- Start Top Search -->
-    <div class="top-search">
-        <div class="container">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search">
-                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
-            </div>
-        </div>
-    </div>
     <!-- End Top Search -->
 
     <!-- Start All Title Box -->
@@ -199,10 +193,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>Login</h2>
+                    <h2>My Account</h2>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                        <li class="breadcrumb-item active">Login</li>
+                        <li class="breadcrumb-item active">My Account</li>
                     </ul>
                 </div>
             </div>
@@ -210,24 +204,28 @@
     </div>
     <!-- End All Title Box -->
 
-    <!-- Start Sign up  -->
-    <div class="cart-box-main">
-        <div class="col-sm-12 col-lg-12 mb-12">
-            <form action="MainController" name="" method="POST" class="login">
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <label for="InputUserID" class="mb-0">User ID</label>
-                        <input name="userID" type="text" class="form-control" id="InputEmail" placeholder="Enter User ID"> </div>
-                    <div class="form-group col-md-12">
-                        <label for="InputPassword" class="mb-0">Password</label>
-                        <input name="password" type="password" class="form-control" id="InputPassword" placeholder="Password"> </div>
-                </div>
-                <input type="submit" name="action" class="btn hvr-hover" value="Login">
-            </form>
+    <!-- Start My Account  -->
+    <div class="my-account-box-main">
+        <div class="col-md-12 col-xs-12" style="text-align: center; color: black;">
+            
+            <label style="display: inline-block; width: 80px;">Name</label>
+            <input style="padding: 8px;width: 500px;" type="text" value="<%= loginUser.getName()%>">
         </div>
-                <span id="login-message"> ${requestScope.ERROR} </span>
+        <div style="margin: 8px">
+            <label style="display: inline-block; width: 80px;">Address</label>
+            <input style="padding: 8px;width: 500px;" type="text" value=" <%= loginUser.getAddress()%>">
+        </div>
+        <div style="margin: 8px">
+            <label style="display: inline-block; width: 80px;">Phone</label>
+            <input style="padding: 8px;width: 500px;" type="text" value=" <%= loginUser.getPhone()%>">
+        </div>
+        <div>
+            <input style="cursor: pointer;display: block;margin: 0 auto;" type="button" value="Save changes" onclick="show()">
+        </div>
+            
+        </div>
     </div>
-    <!-- End Login -->
+    <!-- End My Account -->
 
     <!-- Start Instagram Feed  -->
     <div class="instagram-box">
@@ -317,7 +315,7 @@
     <!-- End Instagram Feed  -->
 
 
-        <!-- Start Footer  -->
+     <!-- Start Footer  -->
     <footer>
         <div class="footer-main">
             <div class="container">

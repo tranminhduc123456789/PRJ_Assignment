@@ -37,24 +37,34 @@ public class MainController extends HttpServlet {
         try {
             String action = request.getParameter("action");
             if ("Login".equals(action)) {
+                System.out.println("Function in MainController: Login");
                 url = LOGIN;
             } else if ("Search".equals(action)) {
+                System.out.println("Function in MainController: Search");
                 url = SEARCH;
             } else if ("Logout".equals(action)) {
+                System.out.println("Function in MainController: Logout");
                 url = LOGOUT;
             } else if ("Delete".equals(action)) {
+                System.out.println("Function in MainController: Delete");
                 url = DELETE;
             } else if ("Update".equals(action)) {
+                System.out.println("Function in MainController: Update");
                 url = UPDATE;
             } else if ("Create".equals(action)) {
+                System.out.println("Function in MainController: Create");
                 url = CREATE;
             } else if ("AddToCart".equals(action)) {
+                System.out.println("Function in MainController: AddToCart");
                 url = ADD_TO_CART;
             } else if ("Remove".equals(action)) {
+                System.out.println("Function in MainController: Remove");
                 url = REMOVE_ITEM;
             } else if("AddProduct".equals(action)){
+                System.out.println("Function in MainController: AddProduct");
                 url = ADD_ITEM;
             } else if("UpdateItem".equals(action)){
+                System.out.println("Function in MainController: UpdateItem");
                 url = UPDATE_CART;
             }
         } catch (Exception event) {

@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>web/Shopping.jsp</url>
+            <bookmark id="1">
+                <name/>
+                <line>229</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ASUS/Downloads/ASM/teste/src/java/sample/controllers/LoginController.java</file>
+            <file>file:/C:/Users/ASUS/Downloads/ASM/teste/src/java/sample/controllers/AddToCartControllers.java</file>
+            <file>file:/C:/Users/ASUS/Downloads/ASM/teste/web/cart.jsp</file>
+            <file>file:/C:/Users/ASUS/Downloads/ASM/teste/src/java/sample/controllers/MainController.java</file>
+            <file>file:/C:/Users/ASUS/Downloads/ASM/teste/web/register.jsp</file>
             <file>file:/C:/Users/ASUS/Downloads/ASM/teste/web/Shopping.jsp</file>
             <file>file:/C:/Users/ASUS/Downloads/ASM/teste/web/ShoppingHome.jsp</file>
-            <file>file:/C:/Users/ASUS/Downloads/ASM/teste/web/Home.jsp</file>
         </group>
     </open-files>
 </project-private>

@@ -19,7 +19,7 @@ import sun.security.util.Password;
  * @author Admin
  */
 public class UserDAO {
-
+    
     public UserDTO checkLogin(String userId, String password) throws SQLException {
         UserDTO user = null;
         Connection conn = null;
@@ -28,15 +28,17 @@ public class UserDAO {
         try {
             conn = DBUtils.getConnection();
             if (conn != null) {
-                String sql = "SELECT name, roleID FROM tbluser WHERE userID =? AND password =?";
+                String sql = "SELECT name, address, phone, password ,roleID FROM tblUser WHERE userID =? AND password =?";
                 pstm = conn.prepareStatement(sql);
                 pstm.setString(1, userId);
                 pstm.setString(2, password);
                 resultSet = pstm.executeQuery();
                 if (resultSet.next()) {
-                    String Name = resultSet.getString("Name");
-                    String roleId = resultSet.getString("roleID");
-                   user = new UserDTO(userId, Name, "", "", "", roleId);
+                    String Name = resultSet.getString("name");
+                    String roleID = resultSet.getString("roleID");
+                    String address = resultSet.getString("address");
+                    String phone = resultSet.getString("phone");
+                    user = new UserDTO(userId, Name, address, phone, password, roleID);
                 }
             }
         } catch (Exception event) {
@@ -63,7 +65,7 @@ public class UserDAO {
         try {
             conn = DBUtils.getConnection();
             if (conn != null) {
-                String sql = "select name, address, password ,roleID FROM tbluser WHERE userID= ?";
+                String sql = "select name, address, phone, password ,roleID FROM tblUser WHERE userID= ?";
                 pstm = conn.prepareStatement(sql);
                 pstm.setString(1, userID);
                 resultSet = pstm.executeQuery();
@@ -71,8 +73,9 @@ public class UserDAO {
                     String Name = resultSet.getString("name");
                     String roleID = resultSet.getString("roleID");
                     String address = resultSet.getString("address");
+                    String phone = resultSet.getString("phone");
                     String password = resultSet.getString("password");
-                    user = new UserDTO(userID, Name, address, Name, password, roleID);
+                    user = new UserDTO(userID, Name, address, phone, password, roleID);
                 }
             }
         } catch (Exception event) {
@@ -90,34 +93,38 @@ public class UserDAO {
         }
         return user;
     }
-
-     public boolean insert(UserDTO user) throws SQLException{
+    
+    public boolean insert(UserDTO user) throws SQLException {
         boolean check = false;
-        Connection conn=null;
-        PreparedStatement stm=null;
+        Connection conn = null;
+        PreparedStatement stm = null;
         try {
-            conn=DBUtils.getConnection();
-            if(conn!=null){
-                String sql= " INSERT INTO users(userID, Name, address, phone, password, roleID) "
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                String sql = " INSERT INTO tblUser(userID, name, address, phone, password, roleID) "
                         + " VALUES(?,?,?,?,?,?) ";
-                stm=conn.prepareStatement(sql);
+                stm = conn.prepareStatement(sql);
                 stm.setString(1, user.getUserID());
                 stm.setString(2, user.getName());
                 stm.setString(3, user.getAddress());
                 stm.setString(4, user.getPhone());
                 stm.setString(5, user.getPassword());
                 stm.setString(6, user.getRoleID());
-                check=stm.executeUpdate()> 0 ? true : false;
+                check = stm.executeUpdate() > 0 ? true : false;
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally{
-            if(stm!=null) stm.close();
-            if(conn!=null) conn.close();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
         return check;
     }
- /*   public List<UserDTO> getListUser(String searchFullName) throws SQLException {
+    /*   public List<UserDTO> getListUser(String searchFullName) throws SQLException {
         List<UserDTO> ListUser = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -232,6 +239,6 @@ public class UserDAO {
         }
         return check;
     }
-    */
+     */
     
 }

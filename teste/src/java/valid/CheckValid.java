@@ -16,4 +16,12 @@ public class CheckValid {
         }
         return true;
 }
+    public static boolean checkNumber(String phone){
+        try{
+            int number = Integer.parseInt(phone);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
+    }
 }
